@@ -24,24 +24,20 @@ public class Calc {
 		return s.matches(Calc.exp_pattern);
 	}
 	
-	public void findAction (String s)
+	public char findAction (String s)
 	{
-		string localAction;
 		for(int i=0; i<s.length(); i++)
 		{
-			if (localAction == ' ')
+			for (int j = 0; j < Calc.actions.length; j++)
 			{
-				for (int j = 0; j < Calc.actions.length; j++)
+				if (s.charAt(i) == Calc.actions[j])
 				{
-					if (s.charAt(i) == Calc.actions[j])
-					{
-						this.actionPos = i;
-						return s.charAt(i);
-					}
+					this.actionPos = i;
+					return s.charAt(i);
 				}
 			}
-			else {break;}
 		}
+		return ' ';
 	}
 	
 	public void cutNumbers (String s)
@@ -76,7 +72,7 @@ public class Calc {
 		
 		if (c.validateExpression(c.inputStr) == true)
 		{
-			c.findAction(c.inputStr); //set values for action and actionPos
+			c.action = c.findAction(c.inputStr); //set values for action and actionPos
 			c.cutNumbers(c.inputStr); //set first and second num
 			int res = c.applyAction(c.firstNum, c.action, c.secondNum); //returns result
 			System.out.println(res);
