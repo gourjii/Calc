@@ -24,7 +24,7 @@ public class Calc {
 		return s.matches(Calc.exp_pattern);
 	}
 	
-	public char findAction (String s)
+	public int findActionPos (String s)
 	{
 		for(int i=0; i<s.length(); i++)
 		{
@@ -32,8 +32,8 @@ public class Calc {
 			{
 				if (s.charAt(i) == Calc.actions[j])
 				{
-					this.actionPos = i;
-					return s.charAt(i);
+					//this.actionPos = i;
+					return i; //returns position of an action
 				}
 			}
 		}
@@ -69,7 +69,8 @@ public class Calc {
 	{
 		if (this.validateExpression(s) == true)
 		{
-			this.action = this.findAction(s); //set values for action and actionPos
+			this.actionPos = this.findActionPos(s);
+			this.action = s.charAt(this.actionPos);//set value for actionPos
 			this.cutNumbers(s); //set first and second num
 			int res = this.applyAction(this.firstNum, this.action, this.secondNum); //returns result
 			System.out.println(res);
