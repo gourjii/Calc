@@ -65,19 +65,22 @@ public class Calc {
 		return res;
 	}
 	
+	public void Calculate(String s)
+	{
+		if (this.validateExpression(s) == true)
+		{
+			this.action = this.findAction(s); //set values for action and actionPos
+			this.cutNumbers(s); //set first and second num
+			int res = this.applyAction(this.firstNum, this.action, this.secondNum); //returns result
+			System.out.println(res);
+		}
+		else {System.out.println("incorrect input: num+action+num, e.g. 2+2");}
+	}
+	
 	public static void main(String [] args)
 	{ 
 		Calc c = new Calc();
 		c.inputStr = c.getInput(); 
-		
-		if (c.validateExpression(c.inputStr) == true)
-		{
-			c.action = c.findAction(c.inputStr); //set values for action and actionPos
-			c.cutNumbers(c.inputStr); //set first and second num
-			int res = c.applyAction(c.firstNum, c.action, c.secondNum); //returns result
-			System.out.println(res);
-		}
-		else {System.out.println("incorrect input: num+action+num, e.g. 2+2");}
-		//System.out.println(action);		
+		c.Calculate(c.inputStr);
 	}
 }
