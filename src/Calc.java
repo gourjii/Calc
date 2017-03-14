@@ -19,12 +19,12 @@ public class Calc {
 		return inputStr; 
 	}
 	
-	public boolean validateExpression(String s)
+	private boolean validateExpression(String s)
 	{
 		return s.matches(Calc.exp_pattern);
 	}
 	
-	public int findActionPos (String s)
+	private int findActionPos (String s)
 	{
 		for(int i=0; i<s.length(); i++)
 		{
@@ -40,7 +40,7 @@ public class Calc {
 		return ' ';
 	}
 	
-	public void cutNumbers (String s)
+	private void cutNumbers (String s)
 	{
 		String first_string = s.substring(0, this.actionPos);
 		String second_string = s.substring(this.actionPos + 1);
@@ -48,7 +48,7 @@ public class Calc {
 		this.secondNum = Integer.parseInt(second_string);
 	}
 
-	public int applyAction (int first, char act, int second)
+	private int applyAction (int first, char act, int second)
 	{
 		int res = 0;
 		switch (act)
