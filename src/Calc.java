@@ -3,13 +3,13 @@ import java.util.Scanner;
 
 public class Calc {
 
-	public int firstNum = 0;
-	public int secondNum = 0;
-	public int actionPos = 0;
-	public char action = ' ';
-	public String inputStr; 
+	private int firstNum = 0;
+	private int secondNum = 0;
+	private int actionPos = 0;
+	private char action = ' ';
+	private String inputStr; 
 	final public static char[] actions = {'+','-','/','*','%'};
-	final public static String exp_pattern = "[0-9]+[/+-/*//%][0-9]+";
+	final public static String exp_pattern = "[0-9 ]+[/+-/*//%][0-9 ]+";
 	
 	public String getInput()
 	{
@@ -17,6 +17,11 @@ public class Calc {
 		String inputStr = userInput.nextLine();
 		userInput.close();
 		return inputStr; 
+	}
+	
+	private String trim(String s)
+	{
+		return s.replaceAll("\\s+","");
 	}
 	
 	private boolean validateExpression(String s)
@@ -32,8 +37,7 @@ public class Calc {
 			{
 				if (s.charAt(i) == Calc.actions[j])
 				{
-					//this.actionPos = i;
-					return i; //returns position of an action
+					return i;
 				}
 			}
 		}
@@ -65,23 +69,27 @@ public class Calc {
 		return res;
 	}
 	
-	public void Calculate(String s)
+	public int calculate(String s)
 	{
-		if (this.validateExpression(s) == true)
+		s = this.trim(s);
+		if (this.validateExpression(s))
 		{
 			this.actionPos = this.findActionPos(s);
 			this.action = s.charAt(this.actionPos);//set value for actionPos
 			this.cutNumbers(s); //set first and second num
-			int res = this.applyAction(this.firstNum, this.action, this.secondNum); //returns result
-			System.out.println(res);
+			return this.applyAction(this.firstNum, this.action, this.secondNum); //returns result
 		}
-		else {System.out.println("incorrect input: num+action+num, e.g. 2+2");}
+		else throw new NumberFormatException();
 	}
 	
 	public static void main(String [] args)
 	{ 
 		Calc c = new Calc();
 		c.inputStr = c.getInput(); 
-		c.Calculate(c.inputStr);
+		try 
+			{System.out.println(c.calculate(c.inputStr));}
+		catch (NumberFormatException a) 
+			{System.out.println("incorrect input: num+action+num, e.g. 2+2");}
 	}
+
 }
